@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"github.com/869413421/wechatbot/gtp"
-	"github.com/eatmoreapple/openwechat"
 	"log"
 	"strings"
+
+	"github.com/869413421/wechatbot/gtp"
+	"github.com/eatmoreapple/openwechat"
 )
 
 var _ MessageHandlerInterface = (*UserMessageHandler)(nil)
@@ -35,10 +36,10 @@ func (g *UserMessageHandler) ReplyText(msg *openwechat.Message) error {
 	// 向GPT发起请求
 	requestText := strings.TrimSpace(msg.Content)
 	requestText = strings.Trim(msg.Content, "\n")
-	reply, err := gtp.Completions(requestText)
+	reply, err := gtp.Completions(sender.NickName, requestText)
 	if err != nil {
 		log.Printf("gtp request error: %v \n", err)
-		msg.ReplyText("机器人神了，我一会发现了就去修。")
+		msg.ReplyText("机器人休眠了，请稍后再试。")
 		return err
 	}
 	if reply == "" {

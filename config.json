@@ -1,5 +1,7 @@
 {
     
-    "api_key": "7121197d58904b0a993ca86a0add7247",
-    "auto_pass": true
+    "api_key": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0SUQiOiIxNjgzNzc1NjU5MDg2MzY0IiwiUGhvbmUiOiIxNTcqKioqMzAxMCIsIkdyb3VwSUQiOiIiLCJQYWdlTmFtZSI6IiIsIk1haWwiOiJsaW5ib2hvbmdAY2liLmNvbS5jbiIsImlzcyI6Im1pbmltYXgifQ.LNBQJzKamC6yx7XkPCvURixG_b8X9VoHb1qoBAsoKyFhaoO-xpKl0cpisyxsPcOWBzcG0Ltq3UdgG1cVlUGhFfAH0NHn4h5ZPDW8579aLPLuKomHhVMaxF54JHkPJ0Hzx7_py5ipNhh0e5PDdweit-FEZhhtSkRZ6H4OmnjMTfTi4PCEytVILe6blOUbCQWqZr1bKiblGA3rg10DsZLQsilesiNmeDn3zsXaoU4wPgif8AcNJES8Hh_cknf0rC8J4A4kXZbKKzH0XGJ9am0TyY4jnNwF5rAFbrCJJAceBkCfIukHXdrOB1_Khy5GuzJLhgroLRqsZE487mU3oDmFvA",
+    "auto_pass": true,
+    "max_boxes" : 1,
+    "user_count" : 1000
 }
