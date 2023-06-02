@@ -1,13 +1,14 @@
 package main
 
-import "github.com/869413421/wechatbot/bootstrap"
-
-func main() {
-	bootstrap.Run()
-}
+import "github.com/869413421/wechatbot/gtp"
 
 /*
 func main() {
-	gtp.Completions("a", "你好")
+	bootstrap.Run()
 }
 */
+
+func main() {
+
+	gtp.Completions("a", "5+7=?")
+}
