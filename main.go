@@ -1,20 +1,12 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
+import "github.com/869413421/wechatbot/bootstrap"
 
-	"github.com/869413421/wechatbot/gtp"
-)
-
-/*
 func main() {
 	bootstrap.Run()
 }
-*/
 
+/*
 func main() {
 
 	//gtp.Completions("a", "5+7=?")
@@ -43,3 +35,4 @@ func main() {
 		fmt.Printf("%s\n", reply)
 	}
 }
+*/
