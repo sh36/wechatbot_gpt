@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/url"
 	"time"
 
@@ -110,66 +111,66 @@ func Xinghuo_chat(msg string) (string, error) {
 	apiSecret := "MDlkZTRlYzNlZTcwZmU5YjU3ZmVmNWNj"
 	gptURL := "wss://spark-api.xf-yun.com/v1.1/chat"
 	question := msg
-
+	var reply string
 	wsParam := NewWsParam(appID, apiKey, apiSecret, gptURL)
 	url, err := wsParam.createURL()
 	if err != nil {
-		fmt.Println("createURL error:", err)
-		return msg, err
+		log.Println("createURL error:", err)
+		return reply, err
 	}
 
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
-		fmt.Println("WebSocket dial error:", err)
-		return msg, err
+		log.Println("WebSocket dial error:", err)
+		return reply, err
 	}
 	defer c.Close()
 
 	data, err := genParams(appID, question)
 	if err != nil {
-		fmt.Println("genParams error:", err)
-		return msg, err
+		log.Println("genParams error:", err)
+		return reply, err
 	}
 
 	err = c.WriteMessage(websocket.TextMessage, data)
 	if err != nil {
-		fmt.Println("WebSocket write error:", err)
-		return msg, err
+		log.Println("WebSocket write error:", err)
+		return reply, err
 	}
 
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
-			fmt.Println("WebSocket read error:", err)
-			return msg, err
+			log.Println("WebSocket read error:", err)
+			return reply, err
 		}
 
 		var response map[string]interface{}
 		err = json.Unmarshal(message, &response)
 		if err != nil {
-			fmt.Println("JSON unmarshal error:", err)
-			return msg, err
+			log.Println("JSON unmarshal error:", err)
+			return reply, err
 		}
 
 		header := response["header"].(map[string]interface{})
 		code := int(header["code"].(float64))
 
 		if code != 0 {
-			fmt.Printf("请求错误: %d, %v\n", code, response)
+			log.Printf("请求错误: %d, %v\n", code, response)
 		} else {
 			payload := response["payload"].(map[string]interface{})
 			choices := payload["choices"].(map[string]interface{})
 			status := int(choices["status"].(float64))
 			content := choices["text"].([]interface{})[0].(map[string]interface{})["content"].(string)
-			msg = content
-			fmt.Print(content)
+			reply += content
+			//fmt.Print(reply)
 			if status == 2 {
-				fmt.Println("Connection closed")
+				//log.Println("Connection closed")
 				break
 			}
 		}
 	}
-	return msg, err
+	return reply, err
 }
 
 func Xinghuo_conversation(sender string, msg string) (string, error) {
