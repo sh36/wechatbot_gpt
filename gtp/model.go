@@ -57,7 +57,7 @@ func Completions(sender string, msg string) (string, error) {
 
 	// 构造回复结果
 
-	result := fmt.Sprintf("%s\n\n———当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n——可在提问前输入模型名称切换，如：minimax+问题。", reply, currentModel.Name)
+	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n可在提问前输入模型名称切换，如：minimax+问题。", reply, currentModel.Name)
 
 	return result, nil
 }
