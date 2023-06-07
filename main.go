@@ -8,8 +8,6 @@ func main() {
 
 /*
 func main() {
-
-	//gtp.Completions("a", "5+7=?")
 	// 循环测试
 	for {
 		// 询问用户输入

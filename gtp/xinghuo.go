@@ -163,13 +163,13 @@ func Xinghuo_chat(msg string) (string, error) {
 			status := int(choices["status"].(float64))
 			content := choices["text"].([]interface{})[0].(map[string]interface{})["content"].(string)
 			reply += content
-			//fmt.Print(reply)
 			if status == 2 {
 				//log.Println("Connection closed")
 				break
 			}
 		}
 	}
+	log.Println("星火回复：" + reply)
 	return reply, err
 }
 
