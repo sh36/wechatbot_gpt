@@ -1,20 +1,12 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strings"
+import "github.com/869413421/wechatbot/bootstrap"
 
-	"github.com/869413421/wechatbot/gtp"
-)
-
-/*
 func main() {
 	bootstrap.Run()
-}s
-*/
+}
 
+/*
 func main() {
 	// 循环测试
 	for {
@@ -41,3 +33,4 @@ func main() {
 		fmt.Printf("%s\n", reply)
 	}
 }
+*/
