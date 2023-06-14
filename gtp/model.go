@@ -29,15 +29,23 @@ func XinghuoConversation(sender string, msg string) (string, error) {
 	return reply, err
 }
 
+// Xinghuo模型函数
+func ErnieBotConversation(sender string, msg string) (string, error) {
+	// 模型逻辑
+	reply, err := ErnieBot_conversation(sender, msg)
+	return reply, err
+}
+
 // 初始化模型
 var minimaxModel = ConversationModel{Name: "minimax", Func: MinimaxConversation}
 var xinghuoModel = ConversationModel{Name: "星火", Func: XinghuoConversation}
+var ErnieBotmodel = ConversationModel{Name: "文心一言", Func: ErnieBotConversation}
 
 // 当前使用的模型
-var currentModel = xinghuoModel
+var currentModel = ErnieBotmodel
 
 func Completions(sender string, msg string) (string, error) {
-	currentModel = xinghuoModel
+	currentModel = ErnieBotmodel
 	// 判断是否切换模型
 	if strings.HasPrefix(msg, "minimax") {
 		currentModel = minimaxModel
@@ -47,6 +55,9 @@ func Completions(sender string, msg string) (string, error) {
 		currentModel = xinghuoModel
 		msg = strings.TrimSpace(strings.ReplaceAll(msg, "星火", ""))
 		//msg = strings.TrimPrefix(msg, "星火")
+	} else if strings.HasPrefix(msg, "文心") {
+		currentModel = xinghuoModel
+		msg = strings.TrimSpace(strings.ReplaceAll(msg, "文心", ""))
 	}
 	// 调用当前模型进行智能交互
 	log.Println(msg)
@@ -57,7 +68,7 @@ func Completions(sender string, msg string) (string, error) {
 
 	// 构造回复结果
 
-	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n可在提问前输入模型名称切换，如：minimax+问题。", reply, currentModel.Name)
+	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n可在提问前输入模型名称切换，如：minimax/星火/文心+问题。", reply, currentModel.Name)
 
 	return result, nil
 }
