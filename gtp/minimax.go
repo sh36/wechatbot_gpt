@@ -84,7 +84,7 @@ func Minimax_chat(msg string, history_stack *History_stack) (string, error) {
 		reply = "很抱歉，此问题无法回答，请稍后再问。"
 	}
 	log.Printf("gpt response text: %s \n", reply)
-
+	//存储历史消息到栈中
 	*history_stack.History = append(*history_stack.History,
 		ChatMessage{
 			SenderType: "BOT",
