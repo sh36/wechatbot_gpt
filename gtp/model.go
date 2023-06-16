@@ -39,7 +39,7 @@ func ErnieBotConversation(sender string, msg string) (string, error) {
 // 初始化模型
 var minimaxModel = ConversationModel{Name: "minimax", Func: MinimaxConversation}
 var xinghuoModel = ConversationModel{Name: "星火", Func: XinghuoConversation}
-var ErnieBotmodel = ConversationModel{Name: "文心一言", Func: ErnieBotConversation}
+var ErnieBotmodel = ConversationModel{Name: "文心", Func: ErnieBotConversation}
 
 // 当前使用的模型
 var currentModel = ErnieBotmodel
@@ -56,7 +56,7 @@ func Completions(sender string, msg string) (string, error) {
 		msg = strings.TrimSpace(strings.ReplaceAll(msg, "星火", ""))
 		//msg = strings.TrimPrefix(msg, "星火")
 	} else if strings.HasPrefix(msg, "文心") {
-		currentModel = xinghuoModel
+		currentModel = ErnieBotmodel
 		msg = strings.TrimSpace(strings.ReplaceAll(msg, "文心", ""))
 	}
 	// 调用当前模型进行智能交互
