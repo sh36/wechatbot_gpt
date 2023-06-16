@@ -47,7 +47,7 @@ func (g *GroupMessageHandler) ReplyText(msg *openwechat.Message) error {
 	reply, err := gtp.Completions(group.NickName, requestText)
 	if err != nil {
 		log.Printf("gtp request error: %v \n", err)
-		msg.ReplyText("机器人休眠了，请稍后再试。")
+		msg.ReplyText("很抱歉，此问题无法回答，请稍后再问。")
 		return err
 	}
 	if reply == "" {
