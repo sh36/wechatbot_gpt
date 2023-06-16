@@ -21,6 +21,10 @@ cd wechatbot
 copy config.dev.json config.json
 
 # 启动项目
-go run main.go
+nohup sh startup.sh &进行项目后台启动
+使用vim打开 nohup.log ，找到最新的日志，即为登录链接(在vim命令模式下输入'G'可快速跳转到最后一行)
+点击链接使用浏览器打开，微信扫码进行登陆
 
-启动前需替换config中的api_key
+# 关闭项目
+ps -aux | grep main.go找到项目对应的进程id
+kill -9 进程id
