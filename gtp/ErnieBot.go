@@ -27,10 +27,17 @@ type ErnieBotMessage struct {
 	Content string `json:"content"`
 }
 
-type ErnieBotRequestBody struct {
+type ErnieBotTurboRequestBody struct {
 	Messages []ErnieBotMessage `json:"messages"`
 	Stream   bool              `json:"stream,omitempty"`
 	UserID   string            `json:"user_id,omitempty"`
+}
+
+type ErnieBotRequestBody struct {
+	Messages    []ErnieBotMessage `json:"messages"`
+	Stream      bool              `json:"stream,omitempty"`
+	Temperature float32           `json:"temperature"`
+	UserID      string            `json:"user_id,omitempty"`
 }
 
 type AccessTokenResponse struct {
@@ -80,13 +87,13 @@ func GetAccessToken(clientID, clientSecret string) (string, error) {
 }
 
 // ErnieBot文本模型回复
-func ErnieBot_chat(msg string) (string, error) {
+func ErnieBotTurbo_chat(msg string) (string, error) {
 	accessToken, err := GetAccessToken("aX9xYA7eQi9nvMF2cRwyDG0q", "NrWvvEPBIeqLRwridSr3RUqtd5CZhUcA")
 	if err != nil {
 		return "", err
 	}
 
-	requestBody := ErnieBotRequestBody{
+	requestBody := ErnieBotTurboRequestBody{
 		Messages: []ErnieBotMessage{
 			{
 				Role:    "user",
@@ -153,19 +160,79 @@ func ErnieBot_chat(msg string) (string, error) {
 	return reply, nil
 }
 
+func ErnieBot_chat(msg string) (string, error) {
+	accessToken, err := GetAccessToken("aX9xYA7eQi9nvMF2cRwyDG0q", "NrWvvEPBIeqLRwridSr3RUqtd5CZhUcA")
+	if err != nil {
+		return "", err
+	}
+
+	requestBody := ErnieBotRequestBody{
+		Messages: []ErnieBotMessage{
+			{
+				Role:    "user",
+				Content: msg,
+			},
+		},
+		Stream:      false, // 设置stream的值，如果不需要使用流式接口则为false
+		Temperature: 0.3,
+		UserID:      "", // 设置user_id的值，如果不需要指定用户ID则为空字符串
+	}
+	requestData, err := json.Marshal(requestBody)
+
+	if err != nil {
+		return "", err
+	}
+	fmt.Printf("request gtp json string: %v\n", string(requestData))
+	newErnieBotApiURL := ErnieBotURL + "?access_token=" + accessToken
+	req, err := http.NewRequest("POST", newErnieBotApiURL, bytes.NewBuffer(requestData))
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer response.Body.Close()
+	fmt.Printf("response.Body json string: %v\n", response.Body)
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return "", err
+	}
+	ErnieBotResponseBody := &ErnieBotResponseBody{}
+	err = json.Unmarshal(body, ErnieBotResponseBody)
+	if err != nil {
+		return "", err
+	}
+
+	reply := ErnieBotResponseBody.Result
+	fmt.Printf("ErnieBotApiResponseBody json string: %v\n", ErnieBotResponseBody)
+	if reply == "" {
+		reply = "很抱歉，此问题无法回答，请稍后再问。"
+	}
+	log.Printf("gpt response text: %s \n", reply)
+
+	return reply, nil
+}
+
 func ErnieBot_conversation(sender string, msg string) (string, error) {
 	// 读取存储的历史记录
 	// TODO 根据wx_id获取历史对话
 	// 将本次对话的问题和答案存入历史记录
-	// if chatHistory.Clear {
-	// 	chatHistory.History = []ErnieBotMessage{}
-	// 	chatHistory.Clear = false
-	// }
 	/*
-		chatHistory.Conversations += 1
-		if chatHistory.Conversations >= 5 {
-			chatHistoryClear()
+		if chatHistory.Clear {
+			chatHistory.History = []ErnieBotMessage{}
+			chatHistory.Clear = false
 		}
+
+			chatHistory.Conversations += 1
+			if chatHistory.Conversations >= 5 {
+				chatHistoryClear()
+			}
 	*/
 
 	reply, err := ErnieBot_chat(msg)
