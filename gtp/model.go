@@ -44,6 +44,8 @@ var ErnieBotmodel = ConversationModel{Name: "文心", Func: ErnieBotConversation
 // 当前使用的模型
 var currentModel = ErnieBotmodel
 
+var count = 0
+
 func Completions(sender string, msg string) (string, error) {
 	currentModel = ErnieBotmodel
 	// 判断是否切换模型
@@ -65,8 +67,9 @@ func Completions(sender string, msg string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("模型调用出错：%s", err.Error())
 	}
-
+	count = count + 1
 	// 构造回复结果
+	log.Printf("当前已调用次数: %d \n", count)
 
 	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n可在提问前输入模型名称切换，如：minimax/星火/文心+问题。", reply, currentModel.Name)
 
