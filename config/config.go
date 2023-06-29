@@ -17,6 +17,8 @@ type Configuration struct {
 	Max_boxes int `json:"max_boxes"`
 	// 限制用户数量
 	User_count int `json:"user_count"`
+	//商汤key
+	SenseTime_api_secret_key string `json:"sensetime_api_secret_key"`
 }
 
 var config *Configuration
