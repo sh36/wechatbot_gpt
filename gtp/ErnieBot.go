@@ -223,15 +223,16 @@ func ErnieBot_conversation(sender string, msg string) (string, error) {
 	// 读取存储的历史记录
 	// TODO 根据wx_id获取历史对话
 	// 将本次对话的问题和答案存入历史记录
-	// if chatHistory.Clear {
-	// 	chatHistory.History = []ErnieBotMessage{}
-	// 	chatHistory.Clear = false
-	// }
 	/*
-		chatHistory.Conversations += 1
-		if chatHistory.Conversations >= 5 {
-			chatHistoryClear()
+		if chatHistory.Clear {
+			chatHistory.History = []ErnieBotMessage{}
+			chatHistory.Clear = false
 		}
+
+			chatHistory.Conversations += 1
+			if chatHistory.Conversations >= 5 {
+				chatHistoryClear()
+			}
 	*/
 
 	reply, err := ErnieBot_chat(msg)
