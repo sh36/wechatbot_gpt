@@ -42,10 +42,10 @@ var xinghuoModel = ConversationModel{Name: "星火", Func: XinghuoConversation}
 var ErnieBotmodel = ConversationModel{Name: "文心", Func: ErnieBotConversation}
 
 // 当前使用的模型
-var currentModel = xinghuoModel
+var currentModel = ErnieBotmodel
 
 func Completions(sender string, msg string) (string, error) {
-	currentModel = xinghuoModel
+	currentModel = ErnieBotmodel
 	// 判断是否切换模型
 	if strings.HasPrefix(msg, "minimax") {
 		currentModel = minimaxModel
