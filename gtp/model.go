@@ -32,7 +32,7 @@ func XinghuoConversation(sender string, msg string) (string, error) {
 // Xinghuo模型函数
 func ErnieBotConversation(sender string, msg string) (string, error) {
 	// 模型逻辑
-	reply, err := ErnieBotApi_conversation(sender, msg)
+	reply, err := ErnieBot_conversation(sender, msg)
 	return reply, err
 }
 
