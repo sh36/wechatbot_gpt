@@ -36,7 +36,7 @@ func ErnieBotConversation(sender string, msg string) (string, error) {
 	return reply, err
 }
 
-//shangtang模型函数
+// shangtang模型函数
 func SenseTimeConversation(sender string, msg string) (string, error) {
 	reply, err := SenseTime_conversation(sender, msg)
 	return reply, err
@@ -47,7 +47,6 @@ var minimaxModel = ConversationModel{Name: "minimax", Func: MinimaxConversation}
 var xinghuoModel = ConversationModel{Name: "星火", Func: XinghuoConversation}
 var ErnieBotModel = ConversationModel{Name: "文心", Func: ErnieBotConversation}
 var SenseTimeModel = ConversationModel{Name: "商汤", Func: SenseTimeConversation}
-
 
 // 当前使用的模型
 var currentModel = ErnieBotModel
@@ -82,7 +81,7 @@ func Completions(sender string, msg string) (string, error) {
 	// 构造回复结果
 	log.Printf("当前已调用次数: %d \n", count)
 
-	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点。\n可在提问前输入模型名称切换，如：minimax/星火/文心/商汤+问题。", reply, currentModel.Name)
+	result := fmt.Sprintf("%s\n\n——\n当前回复来自于%s，以上是模型生成结果，不代表任何人观点，请勿发送非公开信息。\n默认回复为文心，可在提问前输入模型名称切换，如：minimax/星火/文心/商汤+问题。", reply, currentModel.Name)
 
 	return result, nil
 }
